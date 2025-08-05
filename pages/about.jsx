@@ -24,32 +24,31 @@ export default function AboutPage() {
 
             <div className={styles["about-content"]}>
               <p className={styles["about-text"]}>
-                HocxHire is a dynamic platform focused on connecting talented individuals with meaningful opportunities across esports, technology, and corporate domains.
+           HocxHire is a dynamic recruitment platform committed to connecting top talent with leading opportunities across the United States. With a strong foundation in tech hiring, we specialize in placing skilled professionals in C2C, W2, and 1099 roles across various domains — including IT, cloud, AI, data, and enterprise systems.
               </p>
 
               <p className={styles["about-text"]}>
-                We're building a space where growth-minded individuals – from job seekers to recruiters – can collaborate, upskill, and succeed.
-              </p>
+          Our mission is simple:
+To empower candidates and companies alike through transparent, fast, and reliable hiring solutions.
 
-              <p className={styles["about-text"]}>
-                Our unique background in BGMI and recruitment allows us to support both emerging gamers and corporate professionals in finding their next big break.
+At HocxHire, we’re not just filling roles — we’re building careers.
               </p>
             </div>
           </section>
 
           {/* Vision Section */}
           <section className={styles["vision-section"]}>
-            <h2 className={styles["section-heading"]}>Our Vision</h2>
+            <h2 className={styles["section-heading"]}>Our Vision at HocxHire</h2>
             <div className="divider"></div>
             <p className={styles["vision-text"]}>
-              Our goal is to become India's most inclusive platform for career growth – whether you're playing BGMI or building the future of tech.
+              To become USA most inclusive and trusted hiring platform — connecting skilled talent with top opportunities across the USA tech industry.
             </p>
           </section>
           <section className={styles["join-section"]}>
             <h2 className={styles["section-heading"]}>Join HocxHire</h2>
             <div className="divider"></div>
             <p className={styles["join-text"]}>
-              Whether you're a skilled gamer, an aspiring recruiter, or a startup founder – HocxHire welcomes you. Let's grow together.
+           At HocxHire, we provide daily job opportunities across the U.S., including C2C, W2, and 1099 roles — tailored to match your skills and career goals.
             </p>
             <p className={styles["join-text"]}>
               Want to get in touch? We’d love to hear from you.
