@@ -29,9 +29,8 @@ export default function AboutPage() {
 
               <p className={styles["about-text"]}>
           Our mission is simple:
-To empower candidates and companies alike through transparent, fast, and reliable hiring solutions.
-
-At HocxHire, we’re not just filling roles — we’re building careers.
+         To empower candidates and companies alike through transparent, fast, and reliable hiring solutions.
+         At HocxHire, we’re not just filling roles — we’re building careers.
               </p>
             </div>
           </section>
