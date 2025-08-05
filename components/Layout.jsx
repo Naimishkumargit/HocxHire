@@ -1,6 +1,6 @@
 // components/Layout.jsx
 import Head from "next/head";
-import NavBar from "./NavBar";
+import NavBar from "./Navbar";
 import Footer from "./Footer";
 
 const Layout = ({ children }) => {

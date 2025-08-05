@@ -1,6 +1,6 @@
 // pages/about.js
 import Head from "next/head";
-import styles from "../styles/About.module.css"; // renamed to module.css for Next.js
+import styles from "../styles/about.module.css"; // renamed to module.css for Next.js
 
 export default function AboutPage() {
   return (
