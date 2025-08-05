@@ -1,0 +1,82 @@
+:root {
+  /* Primary Backgrounds */
+  --color-primary-dark: #0f1923;
+  --color-secondary-dark: #1a2a3a;
+
+  /* Accent Colors */
+  --color-accent-gold: #ffc107;
+  --color-accent-red: #e94560;
+
+  /* Text Colors */
+  --color-text-light: #ffffff;
+  --color-text-secondary: #aaaaaa;
+
+  /* Neutral / Inactive */
+  --color-dark-gray: #444444;
+
+  /* Default Backgrounds for Light/Dark */
+  --background: var(--color-secondary-dark);
+  --foreground: var(--color-text-light);
+}
+
+/* Optional: Auto dark-mode switch if user prefers */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: var(--color-secondary-dark);
+    --foreground: var(--color-text-light);
+  }
+}
+
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: 'Arial', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.container {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+/* Dividers hr line*/
+.divider {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--color-accent-gold), transparent);
+  margin: 1rem auto 2rem;
+  width: 80%;
+  max-width: 400px;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
