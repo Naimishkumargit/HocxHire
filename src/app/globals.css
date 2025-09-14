@@ -1,26 +1,179 @@
-@import "tailwindcss";
-
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Primary Backgrounds */
+  --color-primary-dark: #0f1923;
+  --color-secondary-dark: #1a2a3a;
+
+  /* Accent Colors */
+  --color-accent-gold: #ffc107;
+  --color-accent-red: #e94560;
+
+  /* Text Colors */
+  --color-text-light: #ffffff;
+  --color-text-secondary: #aaaaaa;
+
+  /* Neutral / Inactive */
+  --color-dark-gray: #444444;
+
+  /* Font sizes */
+  --font-size-body: 16px;
+  --font-size-body-large: 18px;
+  --font-size-h1: 34px;
+  --font-size-h2: 28px;
+  --font-size-h3: 22px;
+  --font-size-nav-link: 15px;
+  --font-size-button: 17px;
+
+  /* Line heights */
+  --line-height-body: 1.5;
+  --line-height-headings: 1.3;
+
+  /* Default Backgrounds for Light/Dark */
+  --background: var(--color-secondary-dark);
+  --foreground: var(--color-text-light);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+  background-color: var(--color-secondary-dark);
+  color: var(--color-text-light);
+  font-family: "Arial", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+  font-size: var(--font-size-body);
+}
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
-@media (prefers-color-scheme: dark) {
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+/* Base styles */
+body {
+  font-family: "Roboto", "Arial", sans-serif;
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  color: var(--color-text-light);
+  background-color: var(--color-secondary-dark);
+  margin: 0;
+  padding: 0;
+}
+
+/* Headings */
+h1 {
+  font-size: var(--font-size-h1);
+  line-height: var(--line-height-headings);
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  line-height: var(--line-height-headings);
+  font-weight: 600;
+  margin-bottom: 0.85rem;
+}
+
+h3 {
+  font-size: var(--font-size-h3);
+  line-height: var(--line-height-headings);
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+/* Paragraphs */
+p,
+li {
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  margin-bottom: 1rem;
+}
+
+/* Buttons and CTAs */
+.hocx_btn {
+  font-size: var(--font-size-button);
+  line-height: 1.4;
+  font-weight: 600;
+  padding: 1rem 2rem;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  background-color: var(--color-accent-gold);
+  color: var(--color-primary-dark);
+  transition: background-color 0.3s ease;
+}
+/* Dividers hr line*/
+.divider {
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-accent-gold),
+    transparent
+  );
+  margin: 1rem auto 2rem;
+  width: 80%;
+  max-width: 400px;
+}
+/* Shadows */
+.shadow-dark {
+  box-shadow: 0 0 18px #0f1923;
+}
+
+/* Responsive: mobile adjustments */
+@media (min-width: 768px) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --font-size-body: 15px;
+    --font-size-h1: 28px;
+    --font-size-h2: 22px;
+    --font-size-h3: 18px;
+    --font-size-nav-link: 14px;
+    --font-size-button: 16px;
+  }
+  .container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+/*Laptop & Desktop (1024px and up)*/
+@media (min-width: 1024px) {
+  :root {
+    --font-size-body: 16px;
+    --font-size-h1: 32px;
+    --font-size-h2: 26px;
+    --font-size-h3: 22px;
+    --font-size-small: 14px;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/*Large Desktop (1440px and up)*/
+@media (min-width: 1440px) {
+  :root {
+    --font-size-body: 17px;
+    --font-size-h1: 36px;
+    --font-size-h2: 30px;
+    --font-size-h3: 24px;
+    --font-size-small: 15px;
+  }
+}
+/* Optional: Auto dark-mode switch if user prefers */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: var(--color-secondary-dark);
+    --foreground: var(--color-text-light);
+  }
 }

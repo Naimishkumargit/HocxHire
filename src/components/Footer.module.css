@@ -1,0 +1,20 @@
+.footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: var(--color-primary-dark);
+  color: var(--color-text-light);
+}
+
+.footer p {
+  margin: 0.5rem 0;
+}
+
+.footerLink {
+  color: var(--color-accent-gold);
+  text-decoration: none;
+  margin: 0 0.5rem;
+}
+
+.footerLink:hover {
+  text-decoration: underline;
+}

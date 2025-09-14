@@ -1,0 +1,99 @@
+/* AboutPage.css */
+
+/* Base Styles */
+.about-page {
+  background-color: var(--color-secondary-dark);
+  color: var(--color-text-light);
+  min-height: 100vh;
+  padding: 2rem 0;
+}
+
+.about-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Typography */
+.about-title {
+  margin-top: 1rem;
+  font-size: 2.5rem;
+  text-align: center;
+  color:var( --color-accent-gold);
+  margin-bottom: 1rem;
+  letter-spacing: 1px;
+}
+
+.section-heading {
+  font-size: 2rem;
+  color:var(--color-accent-gold);
+  margin: 2rem 0 1rem;
+  text-align: center;
+  position: relative;
+}
+/* Content Sections */
+.about-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.about-text,
+.vision-text,
+.join-text,
+.mission-text{
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #e0e0e0;
+  text-align: center;
+}
+
+.vision-section,
+.join-section,
+.mission-section {
+  max-width: 800px;
+  margin: 3rem auto;
+  text-align: center;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .about-title {
+    font-size: 2rem;
+  }
+  
+  .section-heading {
+    font-size: 1.75rem;
+  }
+  
+  .about-text,
+  .vision-text,
+  .join-text {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+  
+  .contact-button {
+    padding: 0.7rem 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-title {
+    font-size: 1.8rem;
+  }
+  
+  .section-heading {
+    font-size: 1.5rem;
+  }
+  
+  .divider {
+    margin: 0.5rem auto 1.5rem;
+  }
+  
+  .about-content {
+    gap: 1rem;
+  }
+}
