@@ -114,11 +114,12 @@ export default function JobDetails({ params }: Props) {
                   </h2>
                   <div className="flex flex-wrap gap-2">
                     {job.skills.map((skill, index) => (
-                      <ul className="list-disc marker:text-[var(--color-accent-gold)] pl-5" key={index}>
+                      <ul
+                        className="list-disc marker:text-[var(--color-accent-gold)] pl-5"
+                        key={index}
+                      >
                         <li className="leading-none">
-                          <span>
-                            {skill}
-                          </span>
+                          <span>{skill}</span>
                         </li>
                       </ul>
                     ))}
@@ -127,13 +128,14 @@ export default function JobDetails({ params }: Props) {
 
                 <div className="mt-10 flex flex-col sm:flex-row gap-4">
                   <a
-                    href={`mailto:${job.email}?subject=Application for ${job.title} position`}
+                    href={`https://mail.google.com/mail/?view=cm&fs=1&to=${job.email}&su=Application for ${job.title} position`}
+                    target="_blank"
                     className="inline-flex items-center justify-center border hover:text-[var(--color-accent-gold)] font-medium py-3 px-6 rounded-md transition-colors"
                   >
                     <Mail className="w-5 h-5 mr-2" />
                     Apply Now
                   </a>
-{/* 
+                  {/* 
                   <button className="inline-flex items-center justify-center border hover:text-[var(--color-accent-gold)] font-medium py-3 px-6 rounded-md transition-colors">
                     <Save className="w-5 h-5 mr-2" />
                     Save Job
