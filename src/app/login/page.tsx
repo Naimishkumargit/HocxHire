@@ -10,17 +10,16 @@ export default function LoginPage() {
   const loading = status === "loading";
   const router = useRouter();
 
-
   useEffect(() => {
     if (session) {
       router.push("/");
     }
   }, [session, router]);
 
-   if (loading) {
+  if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[var(--color-accent-gold)]"></div>
       </div>
     );
   }
@@ -29,32 +28,39 @@ export default function LoginPage() {
     <>
       <Head>
         <title>Log In | HocxHire</title>
+        <meta name="description" content="Sign in to HocxHire to manage and apply for jobs." />
       </Head>
       <div className="px-5 max-w-6xl mx-auto min-h-screen shadow-dark border-b-[3px] border-b-[var(--color-accent-gold)] flex flex-col items-center">
-        <h2 className="mt-9 text-2xl font-bold">Log in or sign up</h2>
+        <div className="flex items-center justify-center px-2 py-12">
+        <div className="w-full max-w-md border rounded-lg shadow-lg p-6">
+          <div className="flex items-center gap-3 mb-4">
+            <img src="/logo.jpg" alt="HocxHire" className="w-10 h-10 rounded-full object-cover" />
+            <div>
+              <h1 className="text-xl font-bold">HocxHire</h1>
+              <p className="text-sm text-gray-500">Log in to manage your job posts and applications</p>
+            </div>
+          </div>
 
-        <p className="mt-2 text-center text-[color:var(--color-dark-gray)] text-sm max-w-md">
-          Log in to HocxHire to apply for jobs, connect with recruiters, and
-          explore career opportunities tailored just for you.
-        </p>
+          <div className="mt-4">
+            <h2 className="text-lg font-semibold">Welcome back</h2>
+            <p className="text-sm text-gray-500 mt-1">Sign in with your account to continue.</p>
+          </div>
 
-        <div className="flex flex-col gap-4 w-full max-w-sm mt-6">
-          <button
-            className="flex items-center justify-center gap-2 border rounded-lg py-3 px-4"
-            onClick={() => signIn("google")}
-          >
-            <img src="/google-icon.png" alt="Google" className="rounded-md w-7 h-7" />
-            <span>Continue with Google</span>
-          </button>
+          <div className="mt-6">
+            <button
+              onClick={() => signIn("google")}
+              className="w-full flex items-center justify-center gap-3 border border-gray-200 rounded-lg py-3 px-4 hover:shadow-sm transition focus:outline-none focus:ring-2 focus:ring-[var(--color-accent-gold)]"
+            >
+              <img src="/google-icon.png" alt="Google" className="w-6 h-6" />
+              <span className="font-medium">Continue with Google</span>
+            </button>
 
-          <button
-            className="flex items-center justify-center gap-2 border rounded-lg py-3 px-4"
-            onClick={() => signIn("linkedin")}
-          >
-            <img src="/linkedin-icon.png" alt="LinkedIn" className="rounded-md w-7 h-7" />
-            <span>Continue with LinkedIn</span>
-          </button>
-        </div>
+            <div className="mt-4 text-center text-xs text-gray-500">
+              By continuing you agree to our <a href="/terms-and-conditions" className="text-[var(--color-accent-gold)]">Terms</a> and <a href="/privacy-policy" className="text-[var(--color-accent-gold)]">Privacy Policy</a>.
+            </div>
+          </div>
+      </div>
+      </div>
       </div>
     </>
   );

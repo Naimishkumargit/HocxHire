@@ -7,7 +7,7 @@ const Footer = () => {
       <p>&copy; {new Date().getFullYear()} HocxHire. All rights reserved.</p>
       
       <Link
-        href="https://www.linkedin.com/in/naimish-kumar-21662030b/"
+        href="https://www.linkedin.com/company/108299401"
         target="_blank"
         rel="noopener noreferrer"
         className={styles.footerLink}

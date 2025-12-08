@@ -74,6 +74,9 @@ const NavBar = () => {
             <Link href="/find-jobs" className={styles.navLink}>
               Find Jobs
             </Link>
+            <Link href="/create-jobs" className={styles.navLink}>
+              Create Jobs
+            </Link>
             <Link href="/about-us" className={styles.navLink}>
               About Us
             </Link>

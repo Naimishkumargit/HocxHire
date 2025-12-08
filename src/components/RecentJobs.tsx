@@ -3,6 +3,8 @@ import { ArrowRight } from "lucide-react";
 import { jobs } from "../data/jobs";
 import JobCard from "./JobCard";
 
+
+
 const RecentJobs: React.FC = () => {
   return (
     <>

@@ -1,10 +1,25 @@
-import { NextPage } from "next";
 import Head from "next/head";
 import JobCard from "@/components/JobCard";
-import { jobs } from "@/data/jobs";
 import SearchBar from "@/components/SearchBar";
+import connectToDatabase from "@/lib/mongodb";
+import Job from "@/models/Job";
 
-const FindJobs: NextPage = () => {
+export default async function FindJobsPage() {
+  await connectToDatabase();
+  const dbJobs = await Job.find({ draft: false }).sort({ createdAt: -1 }).lean();
+
+  // Map DB jobs to the shape JobCard expects (id/_id handled in JobCard)
+  const jobsForUI = dbJobs.map((j: any) => ({
+    _id: j._id?.toString?.() ?? undefined,
+    title: j.title,
+    location: j.location || "",
+    type: j.type || "",
+    experience: j.experience || "",
+    email: j.email || "",
+    skills: j.skills || [],
+    summary: j.summary || "",
+  }));
+
   return (
     <>
       <Head>
@@ -25,8 +40,8 @@ const FindJobs: NextPage = () => {
               <span className="text-[var(--color-accent-gold)]">HocxHire</span>
             </h1>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              We currently have {jobs.length} exciting opportunity
-              {jobs.length !== 1 ? "ies" : ""} available. Find your perfect fit
+              We currently have {jobsForUI.length} exciting opportunity
+              {jobsForUI.length !== 1 ? "ies" : ""} available. Find your perfect fit
               below.
             </p>
           </div>
@@ -34,8 +49,8 @@ const FindJobs: NextPage = () => {
           <div className="py-8 px-4 sm:px-6 lg:px-8">
             <div className="px-4 mx-auto">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {jobs.map((job) => (
-                  <JobCard key={job.id} job={job} />
+                {jobsForUI.map((job) => (
+                  <JobCard key={job._id ?? job.title} job={job} />
                 ))}
               </div>
             </div>
@@ -44,6 +59,4 @@ const FindJobs: NextPage = () => {
       </main>
     </>
   );
-};
-
-export default FindJobs;
+}
