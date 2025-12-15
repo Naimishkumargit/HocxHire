@@ -1,9 +1,7 @@
 import mongoose from 'mongoose';
-const DB_URI = process.env.DB_URI as string;
 
-if (!DB_URI) {
-  throw new Error('Please define DB_URI in .env.local');
-}
+// Defer reading DB_URI until connect time so importing this module
+// does not throw during build when env vars may be unset.
 
 interface MongooseCache {
   conn: typeof mongoose | null;
@@ -21,6 +19,10 @@ if (!global.mongoose) {
 }
 
 async function connectToDatabase(): Promise<typeof mongoose> {
+  const DB_URI = process.env.DB_URI as string | undefined;
+  if (!DB_URI) {
+    throw new Error('Please define DB_URI in .env.local');
+  }
   if (cached.conn) {
     return cached.conn;
   }
