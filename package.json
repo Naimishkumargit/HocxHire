@@ -10,7 +10,7 @@
     "sitemap": "next-sitemap"
   },
   "dependencies": {
-    "@auth/core": "^0.40.0",
+    "@auth/core": "0.34.3",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@mui/icons-material": "^7.3.1",
