@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 import connectToDatabase from "@/lib/mongodb";
 import Job from "@/models/Job";
+import { jobs as localJobs } from "@/data/jobs";
 
 export async function POST(request: Request) {
   try {
@@ -51,9 +52,9 @@ export async function GET() {
       .lean();
     return NextResponse.json(jobs);
   } catch (error: any) {
-    return NextResponse.json(
-      { error: error?.message || "Failed to fetch jobs" },
-      { status: 500 }
-    );
+    // If DB is down in deployment, fall back to local jobs so pages still show data
+    // eslint-disable-next-line no-console
+    console.error("GET /api/jobs - DB fetch failed, returning local jobs:", error);
+    return NextResponse.json(localJobs, { status: 200 });
   }
 }

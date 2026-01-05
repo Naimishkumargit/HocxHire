@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 import JobCard from "./JobCard";
 import connectToDatabase from "@/lib/mongodb";
 import Job from "@/models/Job";
+import { jobs as localJobs } from "@/data/jobs";
 
 interface JobData {
   _id: string;
@@ -16,14 +17,34 @@ interface JobData {
 }
 
 const RecentJobs = async () => {
-  await connectToDatabase();
-  const dbJobs = await Job.find({ draft: false })
-    .sort({ createdAt: -1 })
-    .limit(6)
-    .lean();
+  let dbJobs: any[] = [];
+  try {
+    await connectToDatabase();
+    dbJobs = await Job.find({ draft: false })
+      .sort({ createdAt: -1 })
+      .limit(6)
+      .lean();
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error("RecentJobs: DB unavailable, using local jobs:", err);
+    dbJobs = localJobs
+      .slice()
+      .sort((a, b) => (b.id || 0) - (a.id || 0))
+      .slice(0, 6)
+      .map((j: any) => ({
+        _id: j.id?.toString?.() ?? "",
+        title: j.title ?? "",
+        location: j.location ?? "",
+        type: j.type ?? "",
+        experience: j.experience ?? "",
+        email: j.email ?? "",
+        skills: Array.isArray(j.skills) ? j.skills : [],
+        summary: j.summary ?? "",
+      }));
+  }
 
   const jobsForUI: JobData[] = dbJobs.map((j: any) => ({
-    _id: j._id?.toString?.() ?? "",
+    _id: j._id?.toString?.() ?? j._id ?? j.id?.toString?.() ?? "",
     title: j.title ?? "",
     location: j.location ?? "",
     type: j.type ?? "",

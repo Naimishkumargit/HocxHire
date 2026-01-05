@@ -1,5 +1,6 @@
 import connectToDatabase from "@/lib/mongodb";
 import Job from "@/models/Job";
+import { jobs as localJobs } from "@/data/jobs";
 import type { Metadata } from "next";
 import FindJobsClient from "./FindJobsClient";
 
@@ -39,8 +40,20 @@ export const metadata: Metadata = {
 };
 
 export default async function FindJobsPage() {
-  await connectToDatabase();
-  const dbJobs = await Job.find({ draft: false }).sort({ createdAt: -1 }).lean();
+  let dbJobs: any[] = [];
+  try {
+    await connectToDatabase();
+    dbJobs = await Job.find({ draft: false }).sort({ createdAt: -1 }).lean();
+  } catch (err) {
+    // Fallback to local data when DB is unreachable (deployment without DB_URI)
+    // eslint-disable-next-line no-console
+    console.error("DB connection failed, falling back to local jobs:", err);
+    dbJobs = localJobs.map((j: any) => ({
+      ...j,
+      createdAt: j.createdAt ?? new Date().toISOString(),
+      _id: j.id?.toString?.() ?? undefined,
+    }));
+  }
 
   const jobsForUI = dbJobs.map((j: any) => ({
     _id: j._id?.toString?.() ?? undefined,
