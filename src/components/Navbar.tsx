@@ -84,7 +84,7 @@ const NavBar = () => {
             {/* Login / User Info */}
             {!session ? (
               <div className={styles.navLink}>
-                <Link href="/login" >
+                <Link href="/login">
                   <CircleUser size={24} className="w-8 h-8 " />
                 </Link>
               </div>
@@ -172,6 +172,13 @@ const NavBar = () => {
             className={styles.navLink}
           >
             Find Jobs
+          </Link>
+          <Link
+            href="/create-jobs"
+            onClick={() => setMobileOpen(false)}
+            className={styles.navLink}
+          >
+            Create Jobs
           </Link>
           <Link
             href="/about-us"

@@ -9,7 +9,7 @@ const nextConfig = {
       'images.unsplash.com',           // Unsplash
     ],
   },
-  // LinkedIn auth के लिए additional settings
+
   async headers() {
     return [
       {
@@ -22,7 +22,7 @@ const nextConfig = {
       },
     ]
   },
-  // Environment variables expose करें (यदि needed)
+  // Environment variables expose
   env: {
     CUSTOM_KEY: process.env.CUSTOM_KEY,
   },

@@ -4,17 +4,26 @@ import JobCard from "./JobCard";
 import connectToDatabase from "@/lib/mongodb";
 import Job from "@/models/Job";
 
+interface JobData {
+  _id: string;
+  title: string;
+  location: string;
+  type: string;
+  experience: string;
+  email: string;
+  skills: string[];
+  summary: string;
+}
+
 const RecentJobs = async () => {
   await connectToDatabase();
-
-  // DB se last 6 jobs fetch karo
   const dbJobs = await Job.find({ draft: false })
     .sort({ createdAt: -1 })
     .limit(6)
     .lean();
 
-  const jobsForUI = dbJobs.map((j: any) => ({
-    id: j._id.toString(), // must be string for Client Component
+  const jobsForUI: JobData[] = dbJobs.map((j: any) => ({
+    _id: j._id?.toString?.() ?? "",
     title: j.title ?? "",
     location: j.location ?? "",
     type: j.type ?? "",
@@ -23,7 +32,6 @@ const RecentJobs = async () => {
     skills: Array.isArray(j.skills) ? j.skills : [],
     summary: j.summary ?? "",
   }));
-console.log("Jobs fetched:", jobsForUI.length);
   return (
     <>
       <hr />
@@ -49,7 +57,7 @@ console.log("Jobs fetched:", jobsForUI.length);
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {jobsForUI.map((job) => (
-                  <JobCard key={job.id} job={job} />
+                  <JobCard key={job._id} job={job} />
                 ))}
               </div>
             )}

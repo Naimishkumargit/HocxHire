@@ -1,33 +1,9 @@
 // pages/about.js
-import Head from "next/head";
 import styles from "../about.module.css"; // renamed to module.css for Next.js
 
 export default function AboutPage() {
   return (
     <>
-      <Head>
-        <title>About HocxHire | USA Jobs & Career Recruitment Platform</title>
-        <meta
-          name="description"
-          content="HocxHire is a USA-based recruitment platform connecting job seekers and companies across IT, startups, and corporate sectors. Build your career with opportunities in the United States."
-        />
-        <meta
-          name="keywords"
-          content="HocxHire, About HocxHire, Jobs in USA, Careers in United States, Tech Hiring USA, Recruitment Platform, IT Jobs USA, Startup Hiring, Professional Careers USA"
-        />
-        <meta name="author" content="HocxHire Team" />
-        <meta property="og:title" content="About HocxHire | USA Careers & Hiring Platform" />
-        <meta
-          property="og:description"
-          content="Learn about HocxHire – a USA-based job and recruitment platform helping job seekers and companies connect in IT, startups, and professional careers."
-        />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://hocxhire.com/about" />
-        <meta property="og:site_name" content="HocxHire" />
-        <meta property="og:image" content="https://hocxhire.com/og-image.jpg" />
-        <link rel="canonical" href="https://hocxhire.com/about" />
-      </Head>
-
       <main className={styles["about-page"]}>
         <div className={styles["about-container"]}>
           {/* About Section */}
@@ -97,3 +73,10 @@ export default function AboutPage() {
     </>
   );
 }
+
+export const metadata = {
+  title: "About HocxHire — About Us",
+  description:
+    "Learn about HocxHire's mission and vision to connect talent with opportunity across the USA and India.",
+  keywords: ["About HocxHire", "recruiting", "jobs platform", "career platform", "IT jobs"],
+};

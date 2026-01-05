@@ -1,14 +1,47 @@
-import Head from "next/head";
-import JobCard from "@/components/JobCard";
-import SearchBar from "@/components/SearchBar";
 import connectToDatabase from "@/lib/mongodb";
 import Job from "@/models/Job";
+import type { Metadata } from "next";
+import FindJobsClient from "./FindJobsClient";
+
+export const revalidate = 0; // Disable caching - always fetch fresh data
+export const dynamic = "force-dynamic"; // Force dynamic rendering
+
+export const metadata: Metadata = {
+  title: "Find Jobs — IT, Software & Corporate Roles | HocxHire",
+  description:
+    "Search and apply for IT, software, DevOps, and corporate jobs in USA and India. Explore Java Developer, Cloud Engineer, Full Stack roles and more on HocxHire.",
+  keywords: [
+    "find jobs",
+    "IT jobs",
+    "software jobs",
+    "jobs USA",
+    "jobs India",
+    "DevOps jobs",
+    "Java developer jobs",
+    ".NET developer jobs",
+    "remote jobs",
+    "contract jobs",
+  ],
+  openGraph: {
+    title: "Find Jobs — IT, Software & Corporate Roles | HocxHire",
+    description:
+      "Search and apply for IT, software, DevOps, and corporate jobs in USA and India.",
+    url: "https://hocxhire.com/find-jobs",
+    siteName: "HocxHire",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Find Jobs — IT, Software & Corporate Roles | HocxHire",
+    description:
+      "Search and apply for IT, software, DevOps, and corporate jobs in USA and India.",
+  },
+};
 
 export default async function FindJobsPage() {
   await connectToDatabase();
   const dbJobs = await Job.find({ draft: false }).sort({ createdAt: -1 }).lean();
 
-  // Map DB jobs to the shape JobCard expects (id/_id handled in JobCard)
   const jobsForUI = dbJobs.map((j: any) => ({
     _id: j._id?.toString?.() ?? undefined,
     title: j.title,
@@ -20,43 +53,75 @@ export default async function FindJobsPage() {
     summary: j.summary || "",
   }));
 
+  // Extract unique locations and job titles for suggestions
+  const uniqueLocations = [...new Set(dbJobs.map((j: any) => j.location).filter(Boolean))].sort();
+  const uniqueTitles = [...new Set(dbJobs.map((j: any) => j.title).filter(Boolean))].sort();
+
+  // JSON-LD Schema for JobPosting
+  const jobPostingSchema = dbJobs.map((job: any) => ({
+    "@context": "https://schema.org",
+    "@type": "JobPosting",
+    title: job.title,
+    description: job.summary || job.description,
+    jobLocation: {
+      "@type": "Place",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: job.location,
+      },
+    },
+    hiringOrganization: {
+      "@type": "Organization",
+      name: "HocxHire",
+      sameAs: "https://hocxhire.com",
+      logo: "https://hocxhire.com/logo.jpg",
+    },
+    employmentType: job.type || "CONTRACTOR",
+    experienceRequirements: {
+      "@type": "OccupationalExperienceRequirements",
+      monthsOfExperience: parseInt(job.experience) || 0,
+    },
+    skills: job.skills || [],
+    datePosted: new Date(job.createdAt).toISOString(),
+    applicantLocationRequirements: {
+      "@type": "Country",
+      name: "US",
+    },
+  }));
+
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "HocxHire",
+    url: "https://hocxhire.com",
+    logo: "https://hocxhire.com/logo.jpg",
+    description:
+      "HocxHire connects talented professionals with growing companies across the USA and India.",
+    sameAs: [
+      "https://www.linkedin.com/company/hocxhire",
+      "https://twitter.com/hocxhire",
+    ],
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: "Customer Support",
+      email: "support@hocxhire.com",
+    },
+  };
+
   return (
     <>
-      <Head>
-        <title>Job Vacancies – HocxHire</title>
-        <meta
-          name="description"
-          content="Explore open job positions at HocxHire including Cloud DevOps Engineer and Java Developer roles. Apply now via email."
-        />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/logo.jpg" />
-      </Head>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify([organizationSchema, ...jobPostingSchema]),
+        }}
+      />
 
-      <main className="min-h-screen sm:px-6 lg:px-8">
-        <div className="border-b-[3px] border-b-[var(--color-accent-gold)] max-w-6xl mx-auto shadow-dark">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold pt-4">
-              Join Our Growing Team at{" "}
-              <span className="text-[var(--color-accent-gold)]">HocxHire</span>
-            </h1>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              We currently have {jobsForUI.length} exciting opportunity
-              {jobsForUI.length !== 1 ? "ies" : ""} available. Find your perfect fit
-              below.
-            </p>
-          </div>
-          <SearchBar />
-          <div className="py-8 px-4 sm:px-6 lg:px-8">
-            <div className="px-4 mx-auto">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {jobsForUI.map((job) => (
-                  <JobCard key={job._id ?? job.title} job={job} />
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </main>
+      <FindJobsClient 
+        initialJobs={jobsForUI} 
+        locations={uniqueLocations}
+        jobTitles={uniqueTitles}
+      />
     </>
   );
 }

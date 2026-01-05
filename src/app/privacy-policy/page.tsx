@@ -1,17 +1,7 @@
-import Head from "next/head";
 
 export default function PrivacyPolicy() {
   return (
     <>
-      <Head>
-        <title>Privacy Policy | HocxHire</title>
-        <meta
-          name="description"
-          content="Learn how HocxHire collects, uses, and protects your personal information. Our commitment to your privacy and data security."
-        />
-        <meta name="robots" content="index, follow" />
-      </Head>
-
       <main style={{ maxWidth: "800px", margin: "auto", padding: "2rem", fontFamily: "Arial, sans-serif", lineHeight: "1.6" }}>
         <h1>Privacy Policy</h1>
 
@@ -65,3 +55,9 @@ export default function PrivacyPolicy() {
     </>
   );
 }
+
+export const metadata = {
+  title: "Privacy Policy — HocxHire",
+  description: "HocxHire's privacy practices and how we handle user data.",
+  keywords: ["privacy policy", "data protection", "HocxHire"],
+};

@@ -1,9 +1,10 @@
 "use client"; 
 
 import { useEffect } from "react";
-import Head from "next/head";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+
+// metadata moved to head.tsx because this is a client component
 
 export default function LoginPage() {
   const { data: session, status } = useSession();
@@ -26,10 +27,6 @@ export default function LoginPage() {
 
   return (
     <>
-      <Head>
-        <title>Log In | HocxHire</title>
-        <meta name="description" content="Sign in to HocxHire to manage and apply for jobs." />
-      </Head>
       <div className="px-5 max-w-6xl mx-auto min-h-screen shadow-dark border-b-[3px] border-b-[var(--color-accent-gold)] flex flex-col items-center">
         <div className="flex items-center justify-center px-2 py-12">
         <div className="w-full max-w-md border rounded-lg shadow-lg p-6">
@@ -48,7 +45,7 @@ export default function LoginPage() {
 
           <div className="mt-6">
             <button
-              onClick={() => signIn("google")}
+              onClick={() => signIn("google", { callbackUrl: "/" })}
               className="w-full flex items-center justify-center gap-3 border border-gray-200 rounded-lg py-3 px-4 hover:shadow-sm transition focus:outline-none focus:ring-2 focus:ring-[var(--color-accent-gold)]"
             >
               <img src="/google-icon.png" alt="Google" className="w-6 h-6" />
