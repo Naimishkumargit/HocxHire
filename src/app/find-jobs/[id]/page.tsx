@@ -1,4 +1,5 @@
 import { MapPin, Clock, Briefcase, Mail, ArrowLeft } from "lucide-react";
+import type { Metadata } from "next";
 import connectToDatabase from "@/lib/mongodb";
 import Job from "@/models/Job";
 
@@ -7,6 +8,43 @@ type Props = {
     id: string;
   };
 };
+
+// dynamic metadata gives each job its own title/description
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  try {
+    await connectToDatabase();
+    const job: any = await Job.findById(params.id).lean();
+    if (job) {
+      const title = `${job.title} job in ${job.location} | HocxHire`;
+      const desc = job.summary
+        ? job.summary.slice(0, 160)
+        : `Apply for ${job.title} position in ${job.location} via HocxHire.`;
+      return {
+        title,
+        description: desc,
+        openGraph: {
+          title,
+          description: desc,
+          url: `https://hocxhire.com/find-jobs/${params.id}`,
+          siteName: "HocxHire",
+          type: "article",
+        },
+        twitter: {
+          card: "summary",
+          title,
+          description: desc,
+        },
+        alternates: { canonical: `https://hocxhire.com/find-jobs/${params.id}` },
+      };
+    }
+  } catch (e) {
+    // ignore, fallback to generic
+  }
+  return {
+    title: "Job Details — HocxHire",
+    description: "View job details on HocxHire.",
+  };
+}
 
 export default async function JobDetails({ params }: Props) {
   await connectToDatabase();

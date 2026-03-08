@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 
 export default function PrivacyPolicy() {
   return (
@@ -56,8 +57,21 @@ export default function PrivacyPolicy() {
   );
 }
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Privacy Policy — HocxHire",
-  description: "HocxHire's privacy practices and how we handle user data.",
-  keywords: ["privacy policy", "data protection", "HocxHire"],
+  description: "Read how HocxHire collects, uses, and safeguards your personal information when you use our job platform.",
+  keywords: ["privacy policy", "data protection", "user data", "hocxhire"],
+  openGraph: {
+    title: "Privacy Policy — HocxHire",
+    description: "Read how HocxHire collects, uses, and safeguards your personal information when you use our job platform.",
+    url: "https://hocxhire.com/privacy-policy",
+    siteName: "HocxHire",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Privacy Policy — HocxHire",
+    description: "Read how HocxHire collects, uses, and safeguards your personal information when you use our job platform.",
+  },
+  alternates: { canonical: "https://hocxhire.com/privacy-policy" },
 };

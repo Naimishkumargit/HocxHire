@@ -37,6 +37,7 @@ export const metadata: Metadata = {
     description:
       "Search and apply for IT, software, DevOps, and corporate jobs in USA and India.",
   },
+  alternates: { canonical: "https://hocxhire.com/find-jobs" },
 };
 
 export default async function FindJobsPage() {

@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+
 export default function TermsConditions() {
   return (
     <>
@@ -47,8 +49,21 @@ export default function TermsConditions() {
   );
 }
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Terms & Conditions — HocxHire",
-  description: "Terms and conditions for using HocxHire services.",
-  keywords: ["terms", "terms and conditions", "HocxHire"],
+  description: "Understand the rules and guidelines that govern your use of HocxHire’s job search and hiring services.",
+  keywords: ["terms", "terms and conditions", "user agreement", "hocxhire"],
+  openGraph: {
+    title: "Terms & Conditions — HocxHire",
+    description: "Understand the rules and guidelines that govern your use of HocxHire’s job search and hiring services.",
+    url: "https://hocxhire.com/terms-and-conditions",
+    siteName: "HocxHire",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Terms & Conditions — HocxHire",
+    description: "Understand the rules and guidelines that govern your use of HocxHire’s job search and hiring services.",
+  },
+  alternates: { canonical: "https://hocxhire.com/terms-and-conditions" },
 };

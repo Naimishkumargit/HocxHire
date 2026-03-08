@@ -5,7 +5,7 @@ import React, { useState, useEffect, useRef } from "react";
 interface SearchBarProps {
   onSearch: (title: string, location: string) => void;
   locations: string[];
-  jobTitles: string[];
+  jobTitles: string[]; // the titles used for typeahead suggestions (skills not yet supported)
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({ onSearch, locations = [], jobTitles = [] }) => {
@@ -63,7 +63,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, locations = [], jobTitl
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
         <input
           type="text"
-          placeholder="Search for jobs..."
+          placeholder="Search by title or skills..."
           value={title}
           onChange={(e) => {
             setTitle(e.target.value);

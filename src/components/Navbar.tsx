@@ -2,7 +2,7 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { Menu, X, CircleUser, User, Settings, LogOut } from "lucide-react";
+import { Menu, X, CircleUser, User, Settings, LogOut, Briefcase } from "lucide-react";
 import styles from "./NavBar.module.css";
 import { Session } from "next-auth";
 
@@ -11,6 +11,7 @@ const NavBar = () => {
   const { data: session } = useSession() as { data: Session | null };
   const [profileOpen, setProfileOpen] = useState(false);
   const [mobileProfileOpen, setMobileProfileOpen] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(true);
   const profileRef = useRef<HTMLDivElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const mobileProfileRef = useRef<HTMLDivElement>(null);
@@ -18,6 +19,17 @@ const NavBar = () => {
   const toggleMenu = () => setMobileOpen(!mobileOpen);
   const toggleProfile = () => setProfileOpen(!profileOpen);
   const toggleMobileProfile = () => setMobileProfileOpen(!mobileProfileOpen);
+
+  // Check if device is desktop (for responsive "Create Jobs" visibility)
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -55,6 +67,9 @@ const NavBar = () => {
     };
   }, [mobileOpen, mobileProfileOpen]);
 
+  // Check if user is admin
+  const isAdmin = (session?.user as any)?.role === "admin";
+
   return (
     <>
       <nav className={styles.navbar}>
@@ -74,9 +89,17 @@ const NavBar = () => {
             <Link href="/find-jobs" className={styles.navLink}>
               Find Jobs
             </Link>
-            <Link href="/create-jobs" className={styles.navLink}>
-              Create Jobs
+            <Link href="/create-professional" className={styles.navLink}>
+              Submit Profile
             </Link>
+
+            {/* Create Jobs - Only for admins on desktop */}
+            {isAdmin && isDesktop && (
+              <Link href="/create-jobs" className={styles.navLink}>
+                Create Jobs
+              </Link>
+            )}
+
             <Link href="/about-us" className={styles.navLink}>
               About Us
             </Link>
@@ -117,7 +140,14 @@ const NavBar = () => {
                       <p className="text-xs text-gray-600 truncate">
                         {session.user?.email}
                       </p>
+                      {isAdmin && (
+                        <p className="text-xs text-blue-600 font-semibold mt-1">
+                          Admin
+                        </p>
+                      )}
                     </div>
+
+
 
                     <Link
                       href="#"
@@ -174,12 +204,13 @@ const NavBar = () => {
             Find Jobs
           </Link>
           <Link
-            href="/create-jobs"
+            href="/create-professional"
             onClick={() => setMobileOpen(false)}
             className={styles.navLink}
           >
-            Create Jobs
+            Submit Profile
           </Link>
+          {/* Create Jobs NOT shown on mobile, even for admins */}
           <Link
             href="/about-us"
             onClick={() => setMobileOpen(false)}
@@ -232,6 +263,7 @@ const NavBar = () => {
               {/* Mobile Profile Dropdown */}
               {mobileProfileOpen && (
                 <div className="flex flex-col gap-2 border-t pt-3 ml-3">
+
                   <Link
                     href="#"
                     onClick={() => {

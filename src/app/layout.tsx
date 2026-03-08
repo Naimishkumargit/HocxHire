@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     siteName: "HocxHire",
     images: [
       {
-        url: "og-image.jpg",
+        url: "https://hocxhire.com/og-image.jpg",
         alt: "HocxHire",
       },
     ],
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     title: "HocxHire — Find Jobs in USA & India",
     description:
       "HocxHire connects talented professionals with growing companies across the USA and India.",
-    images: ["og-image.jpg"],
+    images: ["https://hocxhire.com/og-image.jpg"],
   },
   alternates: { canonical: "https://hocxhire.com" },
   icons: {

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Briefcase, FileText, DollarSign, MapPin, Star } from "lucide-react";
@@ -7,6 +7,45 @@ import { Briefcase, FileText, DollarSign, MapPin, Star } from "lucide-react";
 const CreateJobPage = () => {
   const router = useRouter();
   const { data: session } = useSession();
+  const [isMobile, setIsMobile] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Check if user is authorized to view this page
+  useEffect(() => {
+    // Check if mobile
+    const handleResize = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Check authorization
+  useEffect(() => {
+    if (!session) {
+      // Not logged in
+      router.push("/login");
+      return;
+    }
+
+    const isAdmin = (session?.user as any)?.role === "admin";
+    if (!isAdmin) {
+      // Not an admin
+      router.push("/");
+      return;
+    }
+
+    if (isMobile) {
+      // Mobile user - redirect
+      router.push("/");
+      return;
+    }
+
+    setIsLoading(false);
+  }, [session, isMobile, router]);
   const [title, setTitle] = useState("");
   const [company, setCompany] = useState("");
   const [experience, setExperience] = useState("");
@@ -135,12 +174,51 @@ const CreateJobPage = () => {
     );
   }
 
+  const isAdmin = (session?.user as any)?.role === "admin";
+
+  // Show loading state while checking authorization
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <p>Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Check authorization (client-side backup for additional security)
+  if (!isAdmin) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <p className="mb-4">You don't have permission to access this page.</p>
+          <a href="/" className="bg-black text-white py-2 px-4 rounded">Go Home</a>
+        </div>
+      </div>
+    );
+  }
+
+  if (isMobile) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <p className="mb-4">Create Jobs is not available on mobile devices. Please use a desktop.</p>
+          <a href="/" className="bg-black text-white py-2 px-4 rounded">Go Home</a>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen sm:px-6 lg:px-8 border-b-[3px] border-b-[var(--color-accent-gold)] max-w-6xl mx-auto shadow-dark color">
       <div className="border sm:mx-2 p-6">
-        <div className="text-center space-y-1 mb-6">
-          <h1 className="text-2xl font-bold">Post a Job</h1>
-          <p className="text-sm text-gray-500">Create a new job listing to find the perfect professional for your needs</p>
+        <div className="flex items-center justify-between mb-6">
+          <div className="text-center flex-1">
+            <h1 className="text-2xl font-bold">Post a Job</h1>
+            <p className="text-sm text-gray-500">Create a new job listing to find the perfect professional for your needs</p>
+          </div>
+
         </div>
 
         <form

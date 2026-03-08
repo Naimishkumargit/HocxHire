@@ -23,6 +23,13 @@ const HeroSection: React.FC = () => {
           </a>
 
           <a
+            href="/create-professional"
+            className="hocx_btn bg-green-500 hover:bg-green-600"
+          >
+            Submit Your Profile
+          </a>
+
+          <a
             href="/about-us"
             className="px-6 py-3 bg-transparent border border-white text-white font-semibold rounded-lg hover:bg-white hover:text-gray-900 transition text-center"
           >

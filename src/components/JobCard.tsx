@@ -1,23 +1,33 @@
 "use client";
 import { MapPin, Briefcase, Award, Clock, Mail } from "lucide-react";
+import AdminJobActions from "./AdminJobActions";
+import { useState } from "react";
 
 type JobLike = {
   id?: number | string;
   _id?: string;
   title?: string;
+  description?: string;
   location?: string;
   type?: string;
   experience?: string;
   email?: string;
   skills?: string[];
   summary?: string;
+  company?: string;
+  category?: string;
+  budget?: number;
+  featured?: boolean;
+  draft?: boolean;
 };
 
 interface JobCardProps {
   job: JobLike;
+  onJobUpdated?: () => void;
 }
 
-const JobCard: React.FC<JobCardProps> = ({ job }) => {
+const JobCard: React.FC<JobCardProps> = ({ job, onJobUpdated }) => {
+  const [key, setKey] = useState(0);
   return (
     <div className="rounded-lg border p-4 hover:shadow-md transition-all duration-300 h-full flex flex-col">
       {/* Header */}
@@ -56,10 +66,10 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
       )}
 
       {/* Action Buttons - Simple and Clean */}
-      <div className="mt-auto pt-3 flex flex-row sm:flex-row gap-2 justify-around">
+      <div className="mt-auto pt-3 flex flex-row gap-2 items-center">
         <a
           href={`/find-jobs/${job._id ?? job.id}`}
-          className="hover:text-[var(--color-accent-gold)] border py-1 px-2 rounded text-sm flex items-center justify-center"
+          className="hover:text-[var(--color-accent-gold)] border py-1 px-2 rounded text-sm flex items-center justify-center shrink-0"
         >
           View
         </a>
@@ -73,12 +83,26 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
                 // ignore clipboard errors
               }
             }}
-            className="cursor-pointer hover:text-[var(--color-accent-gold)] border py-1 px-2 rounded text-sm font-medium transition-colors flex items-center justify-center"
+            className="cursor-pointer hover:text-[var(--color-accent-gold)] border py-1 px-2 rounded text-sm font-medium transition-colors flex items-center min-w-0 overflow-hidden"
           >
             <Mail className="h-4 w-4 mr-1.5" />
             {job.email}
           </button>
         )}
+
+        {/* Admin Actions */}
+        <div key={key} className="ml-auto">
+          <AdminJobActions 
+            job={{
+              ...job,
+              _id: (job._id || job.id) as string,
+            } as any} 
+            onJobUpdated={() => {
+              setKey(prev => prev + 1);
+              onJobUpdated?.();
+            }} 
+          />
+        </div>
       </div>
     </div>
   );

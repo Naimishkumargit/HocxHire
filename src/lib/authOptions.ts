@@ -32,6 +32,7 @@ export const authOptions = {
         const dbUser = await User.findOne({ email: session.user?.email });
         if (dbUser) {
           (session.user as any).id = dbUser._id.toString();
+          (session.user as any).role = dbUser.role || "user";
         }
       } catch (e) {
         // ignore

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 // pages/about.js
 import styles from "../about.module.css"; // renamed to module.css for Next.js
 
@@ -74,9 +75,24 @@ export default function AboutPage() {
   );
 }
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "About HocxHire — About Us",
   description:
-    "Learn about HocxHire's mission and vision to connect talent with opportunity across the USA and India.",
-  keywords: ["About HocxHire", "recruiting", "jobs platform", "career platform", "IT jobs"],
+    "Discover what drives HocxHire: our mission to connect skilled professionals with growing companies across the USA and India, and the vision that guides our job‑matching platform.",
+  keywords: ["About HocxHire", "career platform", "job portal", "IT jobs", "recruiting", "talent marketplace"],
+  openGraph: {
+    title: "About HocxHire — About Us",
+    description:
+      "Discover what drives HocxHire: our mission to connect skilled professionals with growing companies across the USA and India.",
+    url: "https://hocxhire.com/about-us",
+    siteName: "HocxHire",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About HocxHire — About Us",
+    description:
+      "Discover what drives HocxHire: our mission to connect skilled professionals with growing companies across the USA and India.",
+  },
+  alternates: { canonical: "https://hocxhire.com/about-us" },
 };
