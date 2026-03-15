@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import FeaturedProfessionals from "@/components/FeaturedProfessionals";
 import HeroSection from "@/components/Herosection";
 import RecentJobs from "@/components/RecentJobs";
+import AdSenseBanner from "@/components/AdSenseBanner";
 
 export const metadata: Metadata = {
   title: "HocxHire — Home",
@@ -37,9 +38,10 @@ export default function Home() {
   return (
     <>
       <HeroSection />
+      <AdSenseBanner />
       <RecentJobs />
+      <AdSenseBanner />
       <FeaturedProfessionals />
-
     </>
   );
 }

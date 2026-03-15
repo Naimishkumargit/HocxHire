@@ -1,4 +1,5 @@
 // src/app/layout.tsx
+import Script from "next/script";
 import { Inter, Roboto_Mono } from "next/font/google";
 import type { Metadata } from "next";
 import SessionProviderWrapper from "./providers/SessionProviderWrapper";
@@ -72,6 +73,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${robotoMono.variable}`}>
       <body className="antialiased" suppressHydrationWarning={true}>
+        <Script
+          id="adsense-client"
+          strategy="afterInteractive"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7459577613172218"
+          crossOrigin="anonymous"
+        />
         <SessionProviderWrapper>
           <Navbar />
           <main className="min-h-screen">{children}</main>
